@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Webpage</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            transition: background-color 0.5s ease, color 0.5s ease;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        .dark-mode {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+        }
+        
+        .dark-mode header {
+            background: #2d3436;
+            box-shadow: 0 0 20px #00f7ff;
+        }
+        
+        .dark-mode section {
+            background: #2d3436;
+            color: #ffffff;
+            box-shadow: 0 0 15px #00f7ff;
+        }
+        
+        .dark-mode h1, .dark-mode h2 {
+            color: #00f7ff;
+        }
+
+        .dark-mode nav {
+            background: #2d3436;
+        }
+
+        .dark-mode footer {
+            background: #2d3436;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #e8491d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-mode .theme-toggle {
+            background: #00f7ff;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    
+    <header>
+        <h1>Welcome to My Webpage</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="home">
+            <h2>Home Section</h2>
+            <p>This is a paragraph in the home section. HTML provides the structure of our webpage.</p>
+            <div class="featured-image">
+                <img src="https://picsum.photos/800/400" alt="Featured image" id="mainImage">
+                <button id="changeImage" class="interactive-btn">Change Image</button>
+            </div>
+        </section>
+        
+        <section id="about">
+            <h2>About Section</h2>
+            <p>Here's some information about this webpage and what it's for.</p>
+            <div class="interactive-content">
+                <h3>Our Skills</h3>
+                <div class="skill-bar">
+                    <div class="skill" data-skill="HTML">HTML</div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill" data-skill="CSS">CSS</div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill" data-skill="JavaScript">JavaScript</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 My First Webpage. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const button = document.querySelector('.theme-toggle');
+            button.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+        }
+
+        // Set initial button text
+        document.querySelector('.theme-toggle').textContent = 'Dark Mode';
+    </script>
+</body>
+</html>
