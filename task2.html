@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Web Project</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .nav-flex {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .nav-flex li {
+            margin: 0 1rem;
+        }
+
+        .nav-flex a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-flex a:hover {
+            color: #3498db;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* To-Do List Styles */
+        .todo-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #todoInput {
+            width: 70%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .todo-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .todo-btn:hover {
+            background-color: #27ae60;
+        }
+
+        #todoList {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        #todoList li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+
+        #todoList li button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Gallery Styles */
+        .gallery-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+
+        .remove-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(231, 76, 60, 0.8);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .remove-btn:hover {
+            background-color: rgba(231, 76, 60, 1);
+        }
+
+        .gallery-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #imageUrl {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .gallery-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .gallery-btn:hover {
+            background-color: #8e44ad;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .contact-section {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-container {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            
+            .contact-section {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Website</h1>
+        <nav>
+            <ul class="nav-flex">
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#todo">To-Do List</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="grid-container">
+        <section id="contact" class="contact-section">
+            <h2>Contact Form</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="error-message" id="nameError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                    <span class="error-message" id="messageError"></span>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </section>
+
+        <section id="todo" class="todo-section">
+            <h2>To-Do List</h2>
+            <div class="todo-container">
+                <input type="text" id="todoInput" placeholder="Add a new task...">
+                <button id="addTodoBtn" class="todo-btn">Add</button>
+                <ul id="todoList"></ul>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery-section">
+            <h2>Image Gallery</h2>
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300x200" alt="Placeholder 1">
+                    <button class="remove-btn">Remove</button>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300x200" alt="Placeholder 2">
+                    <button class="remove-btn">Remove</button>
+                </div>
+            </div>
+            <div class="gallery-controls">
+                <input type="text" id="imageUrl" placeholder="Enter image URL">
+                <input type="file" id="imageFile" accept="image/*">
+                <button id="addImageBtn" class="gallery-btn">Add Image</button>
+            </div>
+        </section>
+    </main>
+
+  
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contact Form Validation
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+                
+                // Name validation
+                const nameInput = document.getElementById('name');
+                const nameError = document.getElementById('nameError');
+                if (nameInput.value.trim() === '') {
+                    nameError.textContent = 'Name is required';
+                    nameError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    nameError.style.display = 'none';
+                }
+                
+                // Email validation
+                const emailInput = document.getElementById('email');
+                const emailError = document.getElementById('emailError');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (emailInput.value.trim() === '') {
+                    emailError.textContent = 'Email is required';
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else if (!emailRegex.test(emailInput.value)) {
+                    emailError.textContent = 'Please enter a valid email address';
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    emailError.style.display = 'none';
+                }
+                
+                // Message validation
+                const messageInput = document.getElementById('message');
+                const messageError = document.getElementById('messageError');
+                if (messageInput.value.trim() === '') {
+                    messageError.textContent = 'Message is required';
+                    messageError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    messageError.style.display = 'none';
+                }
+                
+                if (isValid) {
+                    alert('Form submitted successfully!');
+                    contactForm.reset();
+                }
+            });
+            
+            // To-Do List Functionality
+            const todoInput = document.getElementById('todoInput');
+            const addTodoBtn = document.getElementById('addTodoBtn');
+            const todoList = document.getElementById('todoList');
+            
+            function addTodoItem() {
+                const taskText = todoInput.value.trim();
+                if (taskText !== '') {
+                    const li = document.createElement('li');
+                    
+                    const taskSpan = document.createElement('span');
+                    taskSpan.textContent = taskText;
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.addEventListener('click', function() {
+                        li.remove();
+                    });
+                    
+                    li.appendChild(taskSpan);
+                    li.appendChild(deleteBtn);
+                    todoList.appendChild(li);
+                    
+                    todoInput.value = '';
+                }
+            }
+            
+            addTodoBtn.addEventListener('click', addTodoItem);
+            
+            todoInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTodoItem();
+                }
+            });
+            
+            // Image Gallery Functionality
+            const addImageBtn = document.getElementById('addImageBtn');
+            const imageUrlInput = document.getElementById('imageUrl');
+            const imageFileInput = document.getElementById('imageFile');
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            addImageBtn.addEventListener('click', function() {
+                const imageUrl = imageUrlInput.value.trim();
+                const imageFile = imageFileInput.files[0];
+
+                if (imageUrl !== '') {
+                    // Add image from URL
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = 'User uploaded image';
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.addEventListener('click', function() {
+                        galleryItem.remove();
+                    });
+                    
+                    galleryItem.appendChild(img);
+                    galleryItem.appendChild(removeBtn);
+                    galleryGrid.appendChild(galleryItem);
+                    
+                    imageUrlInput.value = '';
+                    imageFileInput.value = '';
+                } else if (imageFile) {
+                    // Add image from file
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const galleryItem = document.createElement('div');
+                        galleryItem.className = 'gallery-item';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = 'User uploaded image';
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'remove-btn';
+                        removeBtn.textContent = 'Remove';
+                        removeBtn.addEventListener('click', function() {
+                            galleryItem.remove();
+                        });
+                        
+                        galleryItem.appendChild(img);
+                        galleryItem.appendChild(removeBtn);
+                        galleryGrid.appendChild(galleryItem);
+                    };
+                    reader.readAsDataURL(imageFile);
+                    imageFileInput.value = '';
+                    imageUrlInput.value = '';
+                }
+            });
+            
+            // Add event listeners to existing remove buttons
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.parentElement.remove();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
