@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Advanced Styling and JavaScript Practice</title>
+<style>
+  /* Base styles */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  :root {
+    --primary-color: #4a90e2;
+    --secondary-color: #50e3c2;
+    --background-color: #000000;
+    --text-color: #eee;
+    --accent-color: #e94e77;
+    --font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Interactive Light Flow Background Layer */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%;
+    left: -40%;
+    width: 180%;
+    height: 180%;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.15) 0%, transparent 40%),
+      radial-gradient(circle at calc(var(--x, 50%) + 30%) calc(var(--y, 50%) + 30%), rgba(80, 227, 194, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at calc(var(--x, 50%) - 25%) calc(var(--y, 50%) - 25%), rgba(74, 144, 226, 0.1) 0%, transparent 45%);
+    transition: background-position 0.1s ease;
+    z-index: 0;
+  }
+
+  header {
+    position: relative;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.85);
+    z-index: 10;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 10;
+  }
+  section {
+    background: #111111;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);
+    margin-bottom: 2rem;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.12),
+      0 4px 15px rgba(80, 227, 194, 0.15);
+  }
+  h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* Responsive Typography */
+  h2 {
+    font-size: 1.75rem;
+  }
+  p {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-color);
+  }
+  button {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 0.7rem 1.4rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.6);
+  }
+  button:disabled {
+    background-color: #555;
+    cursor: default;
+    box-shadow: none;
+  }
+  button:hover:not(:disabled) {
+    background-color: var(--accent-color);
+  }
+
+  /* Quiz Styles */
+  #quiz {
+    display: flex;
+    flex-direction: column;
+  }
+  .question {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+  }
+  .answers {
+    display: flex;
+    flex-direction: column;
+  }
+  .answer-btn {
+    background: var(--secondary-color);
+    margin-bottom: 0.8rem;
+    border-radius: 8px;
+    color: var(--background-color);
+    font-weight: 500;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    padding: 0.8rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 1px 5px rgba(80, 227, 194, 0.5);
+  }
+  .answer-btn:hover {
+    border-color: var(--primary-color);
+    background-color: #2a6f72;
+    color: #d6f8f7;
+  }
+  .answer-btn.correct {
+    background-color: #2e8b2e;
+    border-color: #46a046;
+    color: #b9f1b9;
+    cursor: default;
+    box-shadow: 0 0 10px #3bd13b;
+  }
+  .answer-btn.incorrect {
+    background-color: #8b2e2e;
+    border-color: #a04646;
+    color: #f1b9b9;
+    cursor: default;
+    box-shadow: 0 0 10px #d13b3b;
+  }
+
+  #quiz-result {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    margin-top: 1rem;
+  }
+
+  /* API Section */
+  #api-section p {
+    font-style: italic;
+  }
+  #api-data {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    margin-top: 0.5rem;
+  }
+
+  /* Media Queries for responsiveness */
+
+  /* Mobile Phones (up to 600px) */
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 1.5rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+    }
+    #quiz .question {
+      font-size: 1.1rem;
+    }
+    button {
+      font-size: 0.9rem;
+      padding: 0.6rem 1rem;
+    }
+  }
+  /* Tablets (601px to 900px) */
+  @media (min-width: 601px) and (max-width: 900px) {
+    header h1 {
+      font-size: 1.8rem;
+    }
+    section {
+      padding: 1.5rem;
+    }
+    button {
+      font-size: 1rem;
+      padding: 0.65rem 1.2rem;
+    }
+  }
+  /* Desktop (901px and up) */
+  @media (min-width: 901px) {
+    main {
+      padding: 0;
+    }
+    section {
+      padding: 2rem 3rem;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Advanced Styling & JavaScript Practice</h1>
+</header>
+<main>
+  <section id="quiz-section">
+    <h2>Interactive Quiz</h2>
+    <div id="quiz">
+      <div class="question" id="question-text">Loading question...</div>
+      <div class="answers" id="answer-buttons"></div>
+    </div>
+    <button id="next-btn" disabled>Next Question</button>
+    <div id="quiz-result"></div>
+  </section>
+
+  <section id="api-section">
+    <h2>Joke from Official Joke API</h2>
+    <p>Click the button to fetch a random joke:</p>
+    <button id="fetch-joke-btn">Get a Joke</button>
+    <div id="api-data"></div>
+  </section>
+</main>
+
+<script>
+  (() => {
+    // Quiz questions array
+    const questions = [
+      {
+        question: "What does CSS stand for?",
+        answers: [
+          { text: "Creative Style Sheets", correct: false },
+          { text: "Cascading Style Sheets", correct: true },
+          { text: "Computer Style Sheets", correct: false },
+          { text: "Colorful Style Sheets", correct: false },
+        ]
+      },
+      {
+        question: "Which HTML tag is used to link an external CSS file?",
+        answers: [
+          { text: "<link>", correct: true },
+          { text: "<css>", correct: false },
+          { text: "<style>", correct: false },
+          { text: "<script>", correct: false },
+        ]
+      },
+      {
+        question: "Which property is used to change the background color in CSS?",
+        answers: [
+          { text: "color", correct: false },
+          { text: "background-color", correct: true },
+          { text: "backgroundImage", correct: false },
+          { text: "bgcolor", correct: false },
+        ]
+      },
+      {
+        question: "Which JavaScript method fetches data from an API?",
+        answers: [
+          { text: "fetch()", correct: true },
+          { text: "getData()", correct: false },
+          { text: "ajax()", correct: false },
+          { text: "apiCall()", correct: false },
+        ]
+      },
+      {
+        question: "What is the CSS property used to make a font bold?",
+        answers: [
+          { text: "font-weight", correct: true },
+          { text: "font-style", correct: false },
+          { text: "text-bold", correct: false },
+          { text: "font-bold", correct: false },
+        ]
+      },
+    ];
+
+    const questionText = document.getElementById('question-text');
+    const answerButtons = document.getElementById('answer-buttons');
+    const nextBtn = document.getElementById('next-btn');
+    const quizResult = document.getElementById('quiz-result');
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function resetState() {
+      nextBtn.disabled = true;
+      quizResult.textContent = '';
+      while (answerButtons.firstChild) {
+        answerButtons.removeChild(answerButtons.firstChild);
+      }
+      answerButtons.style.display = 'flex';
+      nextBtn.style.display = 'inline-block';
+    }
+
+    function showQuestion(questionIndex) {
+      resetState();
+      const currentQuestion = questions[questionIndex];
+      questionText.textContent = currentQuestion.question;
+
+      currentQuestion.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.textContent = answer.text;
+        button.classList.add('answer-btn');
+        button.addEventListener('click', () => selectAnswer(button, answer.correct));
+        answerButtons.appendChild(button);
+      });
+    }
+
+    function selectAnswer(button, correct) {
+      // Disable all buttons after a selection
+      Array.from(answerButtons.children).forEach(btn => {
+        btn.disabled = true;
+        btn.classList.remove('correct', 'incorrect');
+      });
+
+      if (correct) {
+        button.classList.add('correct');
+        score++;
+      } else {
+        button.classList.add('incorrect');
+      }
+
+      nextBtn.disabled = false;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion(currentQuestionIndex);
+      } else {
+        showScore();
+      }
+    });
+
+    function showScore() {
+      questionText.textContent = 'Quiz Completed!';
+      answerButtons.style.display = 'none';
+      nextBtn.style.display = 'none';
+      quizResult.textContent = `Your score: ${score} / ${questions.length}`;
+    }
+
+    // Initialize quiz
+    showQuestion(currentQuestionIndex);
+
+    // API Fetch Joke Section
+    const fetchJokeBtn = document.getElementById('fetch-joke-btn');
+    const apiDataDiv = document.getElementById('api-data');
+
+    fetchJokeBtn.addEventListener('click', () => {
+      apiDataDiv.textContent = 'Loading joke...';
+      fetch('https://official-joke-api.appspot.com/random_joke')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not OK');
+          return response.json();
+        })
+        .then(data => {
+          apiDataDiv.innerHTML = `<strong>${data.setup}</strong><br/>${data.punchline}`;
+        })
+        .catch(error => {
+          apiDataDiv.textContent = 'Failed to fetch joke. Try again later.';
+          console.error('Fetch error:', error);
+        });
+    });
+
+    // Interactive light flow effect - update CSS variables on mouse move
+    document.body.addEventListener('mousemove', e => {
+      // Calculate % of mouse position relative to viewport
+      const xPercent = (e.clientX / window.innerWidth) * 100;
+      const yPercent = (e.clientY / window.innerHeight) * 100;
+      document.body.style.setProperty('--x', xPercent + '%');
+      document.body.style.setProperty('--y', yPercent + '%');
+    });
+  })();
+</script>
+</body>
+</html>
+
+
