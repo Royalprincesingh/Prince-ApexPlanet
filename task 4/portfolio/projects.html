@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #111;
+        }
+        .interactive-projects-bg {
+          background: #111;
+          padding: 2rem 1rem;
+          border-radius: 18px;
+          display: flex;
+          gap: 2rem;
+          justify-content: center;
+          align-items: stretch;
+          box-shadow: 0 6px 32px rgba(0,0,0,0.7);
+          position: relative;
+          margin-bottom: 2rem;
+        }
+        .project-card {
+          background: #181818;
+          color: #fff;
+          border-radius: 12px;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.5), 0 0 0 2px #222;
+          padding: 2rem 1.5rem 1.5rem 1.5rem;
+          min-width: 240px;
+          max-width: 320px;
+          flex: 1 1 240px;
+          transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+        .project-card:hover, .project-card:focus {
+          transform: translateY(-8px) scale(1.04) rotate(-1deg);
+          box-shadow: 0 8px 32px 0 #4a90e2cc, 0 0 0 2px #50e3c2;
+          z-index: 2;
+        }
+        .project-card h3 {
+          margin-top: 0;
+          margin-bottom: 0.5rem;
+          font-size: 1.35rem;
+          color: #50e3c2;
+          letter-spacing: 1px;
+          transition: color 0.2s;
+        }
+        .project-card:hover h3 {
+          color: #e94e77;
+        }
+        .project-card p {
+          color: #ccc;
+          margin-bottom: 1.2rem;
+          font-size: 1rem;
+        }
+        .project-card a {
+          display: inline-block;
+          background: linear-gradient(90deg, #4a90e2, #50e3c2);
+          color: #fff;
+          text-decoration: none;
+          padding: 0.6rem 1.2rem;
+          border-radius: 6px;
+          font-weight: bold;
+          letter-spacing: 0.5px;
+          box-shadow: 0 2px 8px #4a90e2aa;
+          transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+          margin-top: 0.5rem;
+        }
+        .project-card a:hover, .project-card a:focus {
+          background: linear-gradient(90deg, #e94e77, #4a90e2);
+          color: #fff;
+          box-shadow: 0 4px 16px #e94e77aa;
+        }
+        /* Subtle animated light effect on hover */
+        .project-card::before {
+          content: '';
+          position: absolute;
+          top: -60%;
+          left: -60%;
+          width: 220%;
+          height: 220%;
+          background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(80,227,194,0.08) 0%, transparent 70%);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s;
+          z-index: 0;
+        }
+        .project-card.active::before {
+          opacity: 1;
+        }
+      </style>
+      
+</head>
+<body>
+    <div class="interactive-projects-bg" id="projects-interactive-bg">
+        <div class="project-card" tabindex="0">
+          <h3>To-Do List App</h3>
+          <p>A dark-themed task manager with LocalStorage.</p>
+          <a href="../todo/index.html" target="_blank">View Project</a>
+        </div>
+        <div class="project-card" tabindex="0">
+          <h3>Product Listing Page</h3>
+          <p>Dynamic PHP-based product filter and sort web app.</p>
+          <a href="../productlisting/index.html" target="_blank">View Project</a>
+        </div>
+      </div>
+      
+      <script>
+        // Interactive light effect on project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+          card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            this.style.setProperty('--x', x + '%');
+            this.style.setProperty('--y', y + '%');
+            this.classList.add('active');
+          });
+          card.addEventListener('mouseleave', function() {
+            this.classList.remove('active');
+          });
+          card.addEventListener('focus', function(e) {
+            this.classList.add('active');
+            this.style.setProperty('--x', '50%');
+            this.style.setProperty('--y', '50%');
+          });
+          card.addEventListener('blur', function(e) {
+            this.classList.remove('active');
+          });
+          // Optional: click to open link
+          card.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'A') {
+              const link = this.querySelector('a');
+              if (link) link.click();
+            }
+          });
+          // Keyboard accessibility: Enter/Space to open
+          card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              const link = this.querySelector('a');
+              if (link) link.click();
+            }
+          });
+        });
+      </script>
+</body>
+</html>
+
+
